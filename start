@@ -1,0 +1,10 @@
+#!/bin/bash
+m4 -DAPACHE_PREFORK_START_SERVERS="{{$APACHE_PREFORK_START_SERVERS}}" \
+   -DAPACHE_PREFORK_MIN_SPARE_SERVERS="{{$APACHE_PREFORK_MIN_SPARE_SERVERS}}" \
+   -DAPACHE_PREFORK_MAX_SPARE_SERVERS="{{$APACHE_PREFORK_MAX_SPARE_SERVERS}}" \
+   -DAPACHE_PREFORK_REQUESTS_PER_CHILD="{{$APACHE_PREFORK_REQUESTS_PER_CHILD}}" \
+   -DAPACHE_PREFORK_MAX_CONNECTIONS_PER_CHILD="{{$APACHE_PREFORK_MAX_CONNECTIONS_PER_CHILD}}" /etc/apache2/mods-available/mpm_prefork.conf.m4 > /etc/apache2/mods-available/mpm_prefork.conf
+
+m4 -DAPACHE_SERVER_NAME="{{$APACHE_SERVER_NAME}}" /etc/apache2/conf-available/server-name.conf.m4 > /etc/apache2/conf-available/server-name.conf
+
+exec /usr/sbin/apache2 -D FOREGROUND $@
