@@ -1,4 +1,4 @@
-FROM        cloudposse/library:apache
+FROM        cloudposse/apache
 MAINTAINER  Erik Osterman "e@osterman.com"
 
 USER root
