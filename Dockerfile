@@ -36,6 +36,7 @@ ADD start /start
 RUN php5enmod suhosin && \
     php5enmod security && \
     php5enmod short-open-tag && \
+    php5enmod uploads && \
     a2enmod mpm_prefork && \
     a2enmod security2 && \
     a2enmod php5 
