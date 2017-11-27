@@ -5,41 +5,33 @@ USER root
 
 
 # Install Apache with PHP 5.5
-RUN echo 'deb http://repo.suhosin.org/ ubuntu-trusty main' >> /etc/apt/sources.list && \
-    wget -q https://sektioneins.de/files/repository.asc -O - | apt-key add - && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y libapache2-modsecurity \
-                       libapache2-mod-php5 \
-                       apache2-mpm-prefork \
-                       php5-cli \
-                       php5 \
+                       libapache2-mod-php \
+                       php-cli \
+                       php \
                        php-mail \
-                       php5-json \
-                       php5-readline \
-                       php5-redis \
-                       php5-memcache \
-                       php5-apcu \ 
-                       php5-mcrypt \
-                       php5-curl \
-                       php5-gd \
-                       php5-pgsql \
-                       php5-mysql \
-                       php5-suhosin-extension && \
+                       php-json \
+                       php-readline \
+                       php-redis \
+                       php-memcache \
+                       php-apcu \
+                       php-mcrypt \
+                       php-curl \
+                       php-gd \
+                       php-pgsql \
+                       php-mysql \
+                       php-soap  && \
       apt-get clean && rm -rf /tmp/* /var/tmp/*
 
-ADD modsecurity/ /etc/modsecurity/
-ADD php-mods-available/ /etc/php5/mods-available/
-ADD mods-available /etc/apache2/mods-available/
-ADD conf-available /etc/apache2/conf-available/
-ADD start /start
+ADD rootfs /
 
-RUN php5enmod suhosin && \
-    php5enmod security && \
-    php5enmod short-open-tag && \
-    php5enmod uploads && \
+RUN phpenmod security && \
+    phpenmod short-open-tag && \
+    phpenmod uploads && \
+    phpenmod soap && \
     a2enmod mpm_prefork && \
-    a2enmod security2 && \
-    a2enmod php5 
+    a2enmod security2
 
 
 
